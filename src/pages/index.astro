@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Guanying Chen">
+  <div class="min-h-screen bg-luxuryBase text-luxuryDark font-organicBody selection:bg-luxuryDark selection:text-luxuryBase relative">
+
+    {/* Hero — Name */}
+    <main class="px-8 pt-20 pb-20 max-w-6xl mx-auto">
+      <div class="mb-6">
+        <h1 class="font-organic text-6xl md:text-8xl leading-none font-light tracking-tight" style="font-variation-settings: 'SOFT' 40;">
+          Guanying<br/><span class="italic">Chen</span>
+        </h1>
+        <p class="mt-4 text-sm tracking-widest uppercase opacity-40">
+          Software Developer based in Los Angeles.
+        </p>
+      </div>
+
+      {/* Skills */}
+      <div class="mt-10 pt-6 border-t border-black/10 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div>
+          <div class="text-[10px] tracking-[0.2em] uppercase opacity-30 mb-2">Languages</div>
+          <div class="text-xs leading-relaxed opacity-50">Java<br/>Python<br/>C++<br/>TypeScript<br/>HTML/CSS<br/>SQL</div>
+        </div>
+        <div>
+          <div class="text-[10px] tracking-[0.2em] uppercase opacity-30 mb-2">Frameworks</div>
+          <div class="text-xs leading-relaxed opacity-50">Next.js<br/>React<br/>Tailwind CSS<br/>FastAPI<br/>Express.js</div>
+        </div>
+        <div>
+          <div class="text-[10px] tracking-[0.2em] uppercase opacity-30 mb-2">Cloud</div>
+          <div class="text-xs leading-relaxed opacity-50">AWS Lambda<br/>S3<br/>Google Cloud<br/>Cloudflare<br/>Supabase</div>
+        </div>
+        <div>
+          <div class="text-[10px] tracking-[0.2em] uppercase opacity-30 mb-2">Tools</div>
+          <div class="text-xs leading-relaxed opacity-50">Docker<br/>Git<br/>SQLite<br/>Convex<br/>Clerk<br/>Mapbox</div>
+        </div>
+      </div>
+
+      {/* Projects */}
+      <div class="mt-14 pt-6 border-t border-black/10">
+        <div class="flex justify-between items-end mb-8">
+          <h2 class="font-organic text-2xl italic" style="font-variation-settings: 'SOFT' 60;">Projects</h2>
+          <div class="text-[10px] tracking-widest uppercase opacity-30">24—26</div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <!-- EchoMap -->
+          <a href="https://devpost.com/software/x-ampe2d?ref_content=user-portfolio&ref_feature=in_progress" target="_blank" class="group block">
+            <div class="w-full aspect-square bg-black/[0.04] border border-black/5 overflow-hidden relative hover:border-black/15 transition-colors duration-300">
+              <img src="/echomap.png" alt="EchoMap" class="w-full h-full object-cover" />
+            </div>
+            <div class="mt-3 flex justify-between items-baseline">
+              <h3 class="text-sm font-medium tracking-wide">EchoMap</h3>
+              <span class="text-[10px] tracking-wider opacity-30">2026</span>
+            </div>
+            <div class="text-[10px] tracking-wider opacity-30 mt-0.5">TypeScript · Next.js · Convex · Mapbox</div>
+          </a>
+
+          <!-- Distributed Log System -->
+          <a href="https://github.com/gchen0002" target="_blank" class="group block">
+            <div class="w-full aspect-square bg-black/[0.04] border border-black/5 overflow-hidden relative hover:border-black/15 transition-colors duration-300">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="font-organic text-lg opacity-10 group-hover:opacity-25 transition-opacity" style="font-variation-settings: 'SOFT' 80;">02</span>
+              </div>
+            </div>
+            <div class="mt-3 flex justify-between items-baseline">
+              <h3 class="text-sm font-medium tracking-wide">Log Aggregation</h3>
+              <span class="text-[10px] tracking-wider opacity-30">2026</span>
+            </div>
+            <div class="text-[10px] tracking-wider opacity-30 mt-0.5">C++17 · Python · SQLite · Docker</div>
+          </a>
+
+          <!-- RitoEsports -->
+          <a href="https://github.com/gchen0002" target="_blank" class="group block">
+            <div class="w-full aspect-square bg-black/[0.04] border border-black/5 overflow-hidden relative hover:border-black/15 transition-colors duration-300">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="font-organic text-lg opacity-10 group-hover:opacity-25 transition-opacity" style="font-variation-settings: 'SOFT' 80;">03</span>
+              </div>
+            </div>
+            <div class="mt-3 flex justify-between items-baseline">
+              <h3 class="text-sm font-medium tracking-wide">RitoEsports Tracker</h3>
+              <span class="text-[10px] tracking-wider opacity-30">2025</span>
+            </div>
+            <div class="text-[10px] tracking-wider opacity-30 mt-0.5">TypeScript · AWS Lambda · S3</div>
+          </a>
+
+          <!-- Gene Analysis -->
+          <a href="https://github.com/gchen0002" target="_blank" class="group block">
+            <div class="w-full aspect-square bg-black/[0.04] border border-black/5 overflow-hidden relative hover:border-black/15 transition-colors duration-300">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="font-organic text-lg opacity-10 group-hover:opacity-25 transition-opacity" style="font-variation-settings: 'SOFT' 80;">04</span>
+              </div>
+            </div>
+            <div class="mt-3 flex justify-between items-baseline">
+              <h3 class="text-sm font-medium tracking-wide">Gene Analysis Tool</h3>
+              <span class="text-[10px] tracking-wider opacity-30">2024</span>
+            </div>
+            <div class="text-[10px] tracking-wider opacity-30 mt-0.5">Java · Algorithms</div>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    {/* Footer */}
+    <footer class="px-8 py-6 border-t border-black/5 flex justify-between text-[10px] tracking-widest uppercase opacity-30">
+      <div>Los Angeles, CA</div>
+      <div>© 2026 Guanying Chen</div>
+    </footer>
+  </div>
+</Layout>

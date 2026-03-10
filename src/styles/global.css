@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  /* Variation 1-3 tokens */
+  --color-luxuryBase: #FBFBF9;
+  --color-luxuryDark: #1A1A1A;
+  --color-luxuryAccent: #D4AF37;
+  --color-playfulBg: #FFF8ED;
+  --color-playfulPink: #FFC8DD;
+  --color-playfulLilac: #CDB4DB;
+  --color-playfulBlue: #A2D2FF;
+  --color-brutalNeon: #DFFF00;
+
+  /* Variation 4: Synthwave */
+  --color-synthBg: #0D0221;
+  --color-synthPurple: #1A0533;
+  --color-synthPink: #FF2975;
+  --color-synthCyan: #00FFF5;
+  --color-synthYellow: #FFE156;
+
+  /* Variation 5: Editorial */
+  --color-edBlack: #0A0A0A;
+  --color-edWhite: #FAFAFA;
+  --color-edRed: #E63946;
+  --color-edGray: #6B6B6B;
+
+  /* Variation 6: Organic */
+  --color-orgCream: #F5F0E8;
+  --color-orgClay: #C67B5C;
+  --color-orgForest: #2D4A3E;
+  --color-orgMoss: #8B9E6B;
+  --color-orgBark: #3E2723;
+
+  /* Fonts: Original 1-6 */
+  --font-brutal: "Bricolage Grotesque", sans-serif;
+  --font-luxury: "Cormorant Garamond", serif;
+  --font-playful: "Lexend", sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --font-synth: "Orbitron", sans-serif;
+  --font-synthBody: "Rajdhani", sans-serif;
+  --font-editorial: "Playfair Display", serif;
+  --font-editorialBody: "Source Serif 4", serif;
+  --font-organic: "Fraunces", serif;
+  --font-organicBody: "Nunito Sans", sans-serif;
+
+  /* Fonts: Variation 7 — Glassmorphism */
+  --font-glassDisplay: "Outfit", sans-serif;
+  --font-glass: "DM Sans", sans-serif;
+
+  /* Fonts: Variation 8 — Newspaper */
+  --font-news: "Libre Baskerville", serif;
+  --font-newsBody: "Lora", serif;
+
+  /* Fonts: Variation 9 — One Pager */
+  --font-onepageAccent: "Syne", sans-serif;
+  --font-onepage: "DM Sans", sans-serif;
+
+  --shadow-brutal: 8px 8px 0px 0px rgba(0,0,0,1);
+  --shadow-brutal-sm: 4px 4px 0px 0px rgba(0,0,0,1);
+}
+
+@layer utilities {
+  .text-border {
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+  }
+}
