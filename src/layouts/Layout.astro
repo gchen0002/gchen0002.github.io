@@ -1,21 +1,20 @@
 ---
 import '../styles/global.css';
-const { title = "Guanying Chen" } = Astro.props;
+import '@fontsource/caveat/latin-400.css';
+import '@fontsource-variable/dm-sans';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+const { title = 'Guanying Chen — Portfolio' } = Astro.props;
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0d0d0e" />
+    <meta name="description" content="Hi, I'm Guanying, a junior at Cal State LA and Full-Stack Developer Intern at KickPost. Explore my work in esports, browser extensions, and distributed systems." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
   </head>
-  <body>
-    <slot />
-  </body>
+  <body><slot /></body>
 </html>

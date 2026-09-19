@@ -9,6 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "5.3.0",
+    "@fontsource/caveat": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@kitlangton/rolling-number": "0.4.1",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.17.1",
     "tailwindcss": "^4.2.1"

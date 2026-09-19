@@ -1,0 +1,10 @@
+---
+interface Props { kind: 'kickpost' | 'esports' | 'rito' | 'logs'; }
+const { kind } = Astro.props;
+---
+<svg viewBox="0 0 64 58" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {kind === 'kickpost' && <><rect x="4" y="6" width="56" height="46" rx="5"/><path d="M4 17h56M11 12h1m5 0h1m5 0h1M33 29h17M33 38h12"/><circle cx="20" cy="34" r="7"/></>}
+  {kind === 'esports' && <><path d="M10 48V32M24 48V19M38 48V27M52 48V7" stroke-width="3.5"/></>}
+  {kind === 'rito' && <><rect x="5" y="7" width="54" height="44" rx="5"/><path d="M5 18h54M12 12h1m6 0h1m6 0h1M17 40V31m14 9V25m14 15V29"/></>}
+  {kind === 'logs' && <><rect x="5" y="7" width="54" height="44" rx="5"/><path d="m17 21 9 9-9 9m17 1h11"/></>}
+</svg>

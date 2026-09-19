@@ -1,115 +1,77 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import ProjectIcon from '../components/ProjectIcon.astro';
+import kickpostHomepage from '../assets/kickpost-homepage.png';
+import kickpostMobile from '../assets/kickpost-mobile.png';
+import esportsDesktop from '../assets/esports-desktop.png';
+import esportsMobile from '../assets/esports-mobile.png';
+import ritoPreview from '../assets/rito-store.png';
+
+const projects = [
+  { id: 'kickpost', title: 'KickPost', category: 'EXPERIENCE', caption: 'FULL-STACK DEVELOPMENT', stack: 'REACT / NODE.JS / POSTGRESQL / AWS', role: 'Full-Stack Developer Intern', date: 'JUL 2026 — PRESENT', description: 'I work across the product: faster database queries, real-time updates, and smoother deployments.', detail: 'From PostgreSQL to React, with a focus on making the everyday experience better.', url: 'https://www.kickpost.io/', link: 'Visit KickPost', secondary: '/resume.pdf', secondaryLabel: 'My résumé' },
+  { id: 'esports', title: 'Esports Analytics', category: 'PROJECT', caption: 'RESEARCH PLATFORM', stack: 'REACT / TYPESCRIPT / EFFECT / CLOUDFLARE', role: 'A closer look at the game.', date: 'LOL & VALORANT', description: 'Player stats, explainable models, and match research, together in one workspace.', detail: 'Compare teams, explore historical performance, and save research with outcome tracking.', url: 'https://esports-prop-research.pages.dev', link: 'Open the platform', secondary: 'https://github.com/gchen0002/Esports-Edge-Analytics', secondaryLabel: 'Source code' },
+  { id: 'rito', title: 'RitoEsports Tracker', category: 'PROJECT', caption: 'CHROME EXTENSION', stack: 'TYPESCRIPT / EFFECT / AWS', role: 'Your next match, one click away.', date: 'JUN 2025 — PRESENT', description: 'Esports schedules, streams, and live alerts, right in your browser.', detail: 'An Effect-based AWS pipeline keeps LoL and VALORANT schedules up to date, with cached results when a refresh fails.', url: 'https://chromewebstore.google.com/detail/ritoesports-tracker/eldpjindebiejpnpclddndcnmefbbooi', link: 'View extension', secondary: undefined, secondaryLabel: undefined },
+  { id: 'logs', title: 'Log Aggregation', category: 'PROJECT', caption: 'DISTRIBUTED SYSTEMS', stack: 'C++17 / TYPESCRIPT / PYTHON / SQLITE', role: 'From scattered logs to answers.', date: '5 CONNECTED SERVICES', description: 'A distributed log platform with real-time search, anomaly detection, and a monitoring dashboard.', detail: 'A C++ file-tail agent, persistent queues, and SQLite full-text search keep the whole flow connected.', url: 'https://github.com/gchen0002/Log-Aggregation-System', link: 'Explore the code', secondary: undefined, secondaryLabel: undefined },
+] as const;
 ---
+<Layout>
+  <a class="skip-link" href="#work">Skip to work</a>
+  <main class="portfolio">
+    <header class="topbar">
+      <nav aria-label="Personal links">
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/gchen0002" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
 
-<Layout title="Guanying Chen">
-  <div class="min-h-screen bg-luxuryBase text-luxuryDark font-organicBody selection:bg-luxuryDark selection:text-luxuryBase relative">
-
-    {/* Hero — Name */}
-    <main class="px-8 pt-20 pb-20 max-w-6xl mx-auto">
-      <div class="mb-6 flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
-        <div>
-          <h1 class="font-organic text-6xl md:text-8xl leading-none font-light tracking-tight" style="font-variation-settings: 'SOFT' 40;">
-            Guanying<br/><span class="italic">Chen</span>
-          </h1>
-          <p class="mt-4 text-sm tracking-widest uppercase opacity-40">
-            Software Developer based in Los Angeles.
-          </p>
-        </div>
-        <a href="/resume.pdf" download class="px-10 py-4 bg-luxuryDark text-luxuryBase text-[11px] tracking-[0.2em] uppercase hover:bg-black transition-colors duration-300 shrink-0 w-max">
-          Résumé ↓
-        </a>
+    <section class="intro" aria-labelledby="greeting">
+      <div class="intro-copy">
+        <h1 id="greeting">Hello <span class="wave" role="img" aria-label="waving hand">👋</span> I’m Guanying</h1>
+        <p>Junior at Cal State LA</p>
       </div>
-
-      {/* Skills */}
-      <div class="mt-10 pt-6 border-t border-black/10 grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div>
-          <div class="text-[10px] tracking-[0.2em] uppercase opacity-30 mb-2">Languages</div>
-          <div class="text-xs leading-relaxed opacity-50">Java<br/>Python<br/>C++<br/>TypeScript<br/>HTML/CSS<br/>SQL</div>
-        </div>
-        <div>
-          <div class="text-[10px] tracking-[0.2em] uppercase opacity-30 mb-2">Frameworks</div>
-          <div class="text-xs leading-relaxed opacity-50">Next.js<br/>React<br/>Tailwind CSS<br/>FastAPI<br/>Express.js</div>
-        </div>
-        <div>
-          <div class="text-[10px] tracking-[0.2em] uppercase opacity-30 mb-2">Cloud</div>
-          <div class="text-xs leading-relaxed opacity-50">AWS Lambda<br/>S3<br/>Google Cloud<br/>Cloudflare<br/>Supabase</div>
-        </div>
-        <div>
-          <div class="text-[10px] tracking-[0.2em] uppercase opacity-30 mb-2">Tools</div>
-          <div class="text-xs leading-relaxed opacity-50">Docker<br/>Git<br/>SQLite<br/>Convex<br/>Clerk<br/>Mapbox</div>
-        </div>
+      <div class="local-clock" aria-label="Current time in Los Angeles">
+        <div class="clock-face" aria-hidden="true"><span class="clock-pair"><span class="clock-digit"><span id="clock-digit-0">-</span></span><span class="clock-digit"><span id="clock-digit-1">-</span></span></span><span class="clock-colon">:</span><span class="clock-pair"><span class="clock-digit"><span id="clock-digit-2">-</span></span><span class="clock-digit"><span id="clock-digit-3">-</span></span></span><span class="clock-period" id="clock-period">PT</span></div>
+        <span class="clock-label">LOS ANGELES</span>
+        <span class="sr-only" id="clock-readable">Los Angeles local time</span>
       </div>
+    </section>
 
-      {/* Projects */}
-      <div class="mt-14 pt-6 border-t border-black/10">
-        <div class="flex justify-between items-end mb-8">
-          <h2 class="font-organic text-2xl italic" style="font-variation-settings: 'SOFT' 60;">Projects</h2>
-          <div class="text-[10px] tracking-widest uppercase opacity-30">24—26</div>
-        </div>
+    <section class="deck" id="work" aria-label="Experience and selected projects">
+      {projects.map((project, index) => (
+        <article class={`panel panel-${project.id}`} style={`--index: ${index}; --after-active: ${index > 0 ? 1 : 0}`} data-panel={index} data-active={index === 0 ? 'true' : 'false'}>
+          <h2 class="panel-heading">
+            <button class="panel-toggle" id={`toggle-${project.id}`} type="button" aria-label={`${project.title} — ${project.category.toLowerCase()}`} aria-expanded={index === 0 ? 'true' : 'false'} aria-controls={`content-${project.id}`}>
+              <span class="panel-number mono" aria-hidden="true">0{index + 1}</span>
+              <span class="panel-category mono" aria-hidden="true">/ {project.category}</span>
+              <span class="rail-title" aria-hidden="true">{project.title}</span>
+              <span class="rail-bottom" aria-hidden="true"><ProjectIcon kind={project.id} /><span class="rail-caption mono">{project.caption}</span></span>
+            </button>
+          </h2>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <!-- EchoMap -->
-          <a href="https://devpost.com/software/x-ampe2d?ref_content=user-portfolio&ref_feature=in_progress" target="_blank" class="group block">
-            <div class="w-full aspect-square bg-black/[0.04] border border-black/5 overflow-hidden relative hover:border-black/15 transition-colors duration-300">
-              <img src="/echomap.png" alt="EchoMap" class="w-full h-full object-cover" />
-            </div>
-            <div class="mt-3 flex justify-between items-baseline">
-              <h3 class="text-sm font-medium tracking-wide">EchoMap</h3>
-              <span class="text-[10px] tracking-wider opacity-30">2026</span>
-            </div>
-            <div class="text-[10px] tracking-wider opacity-30 mt-0.5">TypeScript · Next.js · Convex · Mapbox</div>
-          </a>
-
-          <!-- Distributed Log System -->
-          <a href="https://github.com/gchen0002/Log-Aggregation-System" target="_blank" class="group block">
-            <div class="w-full aspect-square bg-black/[0.04] border border-black/5 overflow-hidden relative hover:border-black/15 transition-colors duration-300">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="opacity-10 group-hover:opacity-25 transition-opacity"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          <div class="panel-content" id={`content-${project.id}`} role="region" aria-labelledby={`toggle-${project.id}`} aria-hidden={index !== 0 ? 'true' : 'false'}>
+            <div class="panel-copy">
+              <div>
+                <h3>{project.title}</h3>
+                <p class="project-role">{project.role}</p>
+                <p class="project-date mono">{project.date}</p>
               </div>
+              <div class="project-description"><span class="short-rule" aria-hidden="true"></span><p>{project.description}</p><p class="project-detail">{project.detail}</p></div>
+              <div class="project-links"><a class="project-link" href={project.url} target="_blank" rel="noopener noreferrer">{project.link}<span aria-hidden="true">↗</span></a>{project.secondary && <a class="secondary-link" href={project.secondary} target="_blank" rel="noopener noreferrer">{project.secondaryLabel} <span aria-hidden="true">↗</span></a>}</div>
             </div>
-            <div class="mt-3 flex justify-between items-baseline">
-              <h3 class="text-sm font-medium tracking-wide">Log Aggregation</h3>
-              <span class="text-[10px] tracking-wider opacity-30">2026</span>
-            </div>
-            <div class="text-[10px] tracking-wider opacity-30 mt-0.5">C++17 · Python · SQLite · Docker</div>
-          </a>
 
-          <!-- RitoEsports -->
-          <a href="https://chromewebstore.google.com/detail/ritoesports-tracker/eldpjindebiejpnpclddndcnmefbbooi?authuser=0&hl=en" target="_blank" class="group block">
-            <div class="w-full aspect-square bg-black/[0.04] border border-black/5 overflow-hidden relative hover:border-black/15 transition-colors duration-300">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="opacity-10 group-hover:opacity-25 transition-opacity"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 2a10 10 0 0 1 8.66 5h-5.91a5 5 0 0 0-5.5 0H3.34A10 10 0 0 1 12 2zM2 12a10 10 0 0 0 5 8.66l2.95-5.12a5 5 0 0 1-2.75-4.78L2.05 10.5A10 10 0 0 0 2 12zm15.2 1.24L14.25 18.4A10 10 0 0 0 22 12a10 10 0 0 0-.54-3.24l-5.12 2.96a5 5 0 0 1 .86 1.52z"/></svg>
-              </div>
+            <div class={`preview preview-${project.id}`}>
+              {project.id === 'kickpost' && <a class="website-preview" href="https://www.kickpost.io/" target="_blank" rel="noopener noreferrer" aria-label="Preview KickPost’s website — opens in a new tab"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>kickpost.io</span><span aria-hidden="true">↗</span></div><div class="website-capture"><Image class="website-desktop" src={kickpostHomepage} width={960} format="webp" alt="KickPost homepage with its partner community and sales platform" loading="eager" /><Image class="website-mobile" src={kickpostMobile} width={390} format="webp" alt="KickPost mobile homepage" loading="lazy" /></div><span class="website-caption"><span>Explore KickPost</span><span aria-hidden="true">↗</span></span></a>}
+              {project.id === 'esports' && <a class="website-preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label="Open Esports Analytics — preview of the research platform"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Esports Analytics</span><span aria-hidden="true">↗</span></div><div class="website-capture"><Image class="website-desktop" src={esportsDesktop} width={1100} format="webp" alt="Esports Analytics showing the live match board, player research, and historical performance chart" loading="lazy" /><Image class="website-mobile" src={esportsMobile} width={390} format="webp" alt="Esports Analytics mobile player research screen" loading="lazy" /></div><span class="website-caption"><span>Explore the platform</span><span aria-hidden="true">↗</span></span></a>}
+              {project.id === 'rito' && <a class="website-preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label="View RitoEsports Tracker in the Chrome Web Store"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>RitoEsports Tracker</span><span aria-hidden="true">↗</span></div><div class="website-capture rito-capture"><Image src={ritoPreview} width={1100} format="webp" alt="RitoEsports Tracker’s published screenshot showing live matches, upcoming schedules, and stream links" loading="lazy" /></div><span class="website-caption"><span>View extension</span><span aria-hidden="true">↗</span></span></a>}
+              {project.id === 'logs' && <div class="logs-preview" aria-label="Illustration of the log aggregation architecture"><div class="mini-heading"><span class="mini-mark">›_</span><span>Log pipeline</span></div><div class="log-flow"><span>TAIL</span><span>→</span><span>QUEUE</span><span>→</span><span>STORE</span></div><div class="log-lines mono"><p><span class="log-time">01</span><b>agent</b> watch file changes</p><p><span class="log-time">02</span><b>queue</b> batch & persist</p><p><span class="log-time">03</span><b>search</b> index with FTS5</p><p><span class="log-time">04</span><b>detect</b> find anomalies</p></div><div class="log-summary"><strong>Many sources.<br/>One place to look.</strong><span class="mono">C++17 → SQLITE → PYTHON</span></div></div>}
             </div>
-            <div class="mt-3 flex justify-between items-baseline">
-              <h3 class="text-sm font-medium tracking-wide">RitoEsports Tracker</h3>
-              <span class="text-[10px] tracking-wider opacity-30">2025</span>
-            </div>
-            <div class="text-[10px] tracking-wider opacity-30 mt-0.5">TypeScript · AWS Lambda · S3</div>
-          </a>
-
-          <!-- Gene Analysis -->
-          <a href="https://github.com/gchen0002/Exons" target="_blank" class="group block">
-            <div class="w-full aspect-square bg-black/[0.04] border border-black/5 overflow-hidden relative hover:border-black/15 transition-colors duration-300">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="opacity-10 group-hover:opacity-25 transition-opacity"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              </div>
-            </div>
-            <div class="mt-3 flex justify-between items-baseline">
-              <h3 class="text-sm font-medium tracking-wide">Gene Analysis Tool</h3>
-              <span class="text-[10px] tracking-wider opacity-30">2024</span>
-            </div>
-            <div class="text-[10px] tracking-wider opacity-30 mt-0.5">Java · Algorithms</div>
-          </a>
-        </div>
-      </div>
-    </main>
-
-    {/* Footer */}
-    <footer class="px-8 py-6 border-t border-black/5 flex justify-between text-[10px] tracking-widest uppercase opacity-30">
-      <div>Los Angeles, CA</div>
-      <div>© 2026 Guanying Chen</div>
-    </footer>
-  </div>
+            <p class="panel-stack mono">{project.stack}</p>
+          </div>
+        </article>
+      ))}
+    </section>
+    <noscript><p class="no-script-links">Explore: {projects.map(project => <a href={project.url}>{project.title} ↗</a>)}</p></noscript>
+  </main>
+  <script src="../scripts/portfolio.ts"></script>
 </Layout>
