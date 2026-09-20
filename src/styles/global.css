@@ -364,6 +364,8 @@ button:focus-visible {
 .panel[data-active="true"] .rail-title,
 .panel[data-active="true"] .rail-bottom {
   opacity: 0;
+  visibility: hidden;
+  transition: none;
   pointer-events: none;
 }
 .panel-content {
