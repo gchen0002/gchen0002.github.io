@@ -122,6 +122,30 @@ button:focus-visible {
   line-height: 1.12;
   letter-spacing: 0.005em;
 }
+.handwritten-word { white-space: nowrap; }
+.handwritten-letter { position: relative; display: inline-block; }
+/* A dim ink guide keeps the complete greeting visible while each letter reveals. */
+@media (prefers-reduced-motion: no-preference) {
+  .handwritten-letter { color: #858580; }
+  .handwritten-letter::after {
+    content: attr(data-letter);
+    position: absolute;
+    inset: 0;
+    color: #f5f3ee;
+    animation: write-letter 360ms cubic-bezier(0.2, 0.6, 0.35, 1) var(--letter-delay) both;
+  }
+  .greeting-writing .wave { animation: greeting-wave 850ms ease-in-out 500ms both; }
+}
+@keyframes write-letter {
+  from { clip-path: inset(-0.2em 110% -0.2em -0.15em); }
+  to { clip-path: inset(-0.2em -0.15em -0.2em -0.15em); }
+}
+@keyframes greeting-wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(12deg); }
+  55% { transform: rotate(-8deg); }
+  80% { transform: rotate(6deg); }
+}
 .wave {
   display: inline-block;
   font-size: 0.7em;
@@ -191,7 +215,8 @@ button:focus-visible {
   --rail-size: calc((100cqw - 3 * var(--panel-gap)) / (var(--panel-grow) + 3));
   --expanded-size: calc(var(--rail-size) * var(--panel-grow));
   --panel-radius: 16px;
-  --panel-duration: 380ms;
+  --panel-duration: 620ms;
+  --panel-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   display: flex;
   gap: 8px;
   flex: 1 1 auto;
@@ -211,7 +236,7 @@ button:focus-visible {
   color: #111;
   transform: translateX(calc(var(--index) * (var(--rail-size) + var(--panel-gap)) + var(--after-active) * (var(--expanded-size) - var(--rail-size))));
   clip-path: inset(0 calc(100% - var(--rail-size)) 0 0 round var(--panel-radius));
-  transition: transform var(--panel-duration) var(--ease), clip-path var(--panel-duration) var(--ease);
+  transition: transform var(--panel-duration) var(--panel-ease), clip-path var(--panel-duration) var(--panel-ease);
   will-change: transform, clip-path;
 }
 .panel[data-active="true"] {
@@ -329,8 +354,8 @@ button:focus-visible {
   visibility: visible;
   transform: translateY(0);
   transition:
-    opacity 200ms 70ms,
-    transform 260ms 70ms,
+    opacity 300ms 120ms,
+    transform 420ms 100ms,
     visibility 0s;
 }
 .panel-copy {
@@ -834,7 +859,7 @@ button:focus-visible {
     --rail-size: 49px;
     --expanded-size: calc(100cqh - 3 * (var(--rail-size) + var(--panel-gap)));
     --panel-radius: 10px;
-    --panel-duration: 320ms;
+    --panel-duration: 520ms;
     flex-direction: column;
     gap: 7px;
     min-height: 415px;

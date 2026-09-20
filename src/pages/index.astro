@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import ProjectIcon from '../components/ProjectIcon.astro';
+import HandwrittenGreeting from '../components/HandwrittenGreeting.astro';
 import kickpostHomepage from '../assets/kickpost-homepage.png';
 import kickpostMobile from '../assets/kickpost-mobile.png';
 import esportsDesktop from '../assets/esports-desktop.png';
@@ -27,7 +28,7 @@ const projects = [
 
     <section class="intro" aria-labelledby="greeting">
       <div class="intro-copy">
-        <h1 id="greeting">Hello <span class="wave" role="img" aria-label="waving hand">👋</span> I’m Guanying</h1>
+        <HandwrittenGreeting />
         <p>Junior at Cal State LA</p>
       </div>
       <div class="local-clock" aria-label="Current time in Los Angeles">
