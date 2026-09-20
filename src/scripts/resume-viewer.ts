@@ -1,21 +1,18 @@
-import { getDocument, GlobalWorkerOptions, TextLayer, type PDFDocumentProxy } from "pdfjs-dist";
-import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+import { getDocument, PDFWorker, TextLayer, type PDFDocumentProxy } from "pdfjs-dist";
 
-GlobalWorkerOptions.workerSrc = workerUrl;
-let documentPromise: Promise<PDFDocumentProxy> | undefined;
-
-function loadDocument(url: string) {
-  if (!documentPromise) {
-    documentPromise = getDocument({ url }).promise.catch((error: unknown) => {
-      documentPromise = undefined;
-      throw error;
-    });
+/** Open the already downloaded PDF using the worker started by the dialog. */
+export async function openResume(data: ArrayBuffer, port: Worker) {
+  const worker = PDFWorker.create({ port });
+  try {
+    return await getDocument({ data, worker }).promise;
+  } catch (error: unknown) {
+    worker.destroy();
+    throw error;
   }
-  return documentPromise;
 }
 
-export async function renderResume(host: HTMLElement, url: string, width: number, signal: AbortSignal) {
-  const pdf = await loadDocument(url);
+/** Render the cached document at the requested width, replacing pages only when complete. */
+export async function renderResume(host: HTMLElement, pdf: PDFDocumentProxy, width: number, signal: AbortSignal) {
   const fragment = document.createDocumentFragment();
   for (let number = 1; number <= pdf.numPages; number++) {
     if (signal.aborted) return;
