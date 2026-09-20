@@ -40,7 +40,7 @@ const projects = [
 
     <section class="deck" id="work" aria-label="Experience and selected projects">
       {projects.map((project, index) => (
-        <article class={`panel panel-${project.id}`} style={`--index: ${index}; --after-active: ${index > 0 ? 1 : 0}`} data-panel={index} data-active={index === 0 ? 'true' : 'false'}>
+        <article class={`panel panel-${project.id}`} style={`--index: ${index}; --after-active: ${index > 0 ? 1 : 0}`} data-panel={index} data-active={index === 0 ? 'true' : 'false'} data-content-ready={index === 0 ? 'true' : 'false'}>
           <h2 class="panel-heading">
             <button class="panel-toggle" id={`toggle-${project.id}`} type="button" aria-label={`${project.title} — ${project.category.toLowerCase()}`} aria-expanded={index === 0 ? 'true' : 'false'} aria-controls={`content-${project.id}`}>
               <span class="panel-number mono" aria-hidden="true">0{index + 1}</span>

@@ -13,6 +13,18 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let motionFrame: number | undefined;
 let expansion = panels.map(() => 0);
 
+function setContentReady(index: number | null) {
+  panels.forEach((panel, position) => {
+    const ready = position === index;
+    panel.dataset.contentReady = String(ready);
+    const content = contents[position];
+    if (content) {
+      content.inert = !ready;
+      content.setAttribute("aria-hidden", String(!ready));
+    }
+  });
+}
+
 function clearMotionStyles() {
   panels.forEach((panel) => {
     panel.style.removeProperty("transform");
@@ -25,6 +37,7 @@ function cancelPanelMotion() {
   motionFrame = undefined;
   expansion = panels.map((_, index) => index === active ? 1 : 0);
   clearMotionStyles();
+  setContentReady(active);
 }
 
 reducedMotion.addEventListener("change", cancelPanelMotion);
@@ -37,22 +50,20 @@ function openPanel(index: number) {
   if (motionFrame !== undefined) cancelAnimationFrame(motionFrame);
   motionFrame = undefined;
   active = index;
+  // Hide details before the clip moves; reveal only after the panel settles.
+  setContentReady(null);
   panels.forEach((panel, position) => {
     const expanded = position === index;
     panel.dataset.active = String(expanded);
     panel.style.setProperty("--after-active", position > index ? "1" : "0");
     buttons[position]?.setAttribute("aria-expanded", String(expanded));
-    const content = contents[position];
-    if (content) {
-      content.inert = !expanded;
-      content.setAttribute("aria-hidden", String(!expanded));
-    }
   });
   const target = panels.map((_, position) => position === index ? 1 : 0);
   const firstPanel = panels[0];
   if (!animate || !deck || !firstPanel) {
     expansion = target;
     clearMotionStyles();
+    setContentReady(index);
     return;
   }
 
@@ -96,6 +107,7 @@ function openPanel(index: number) {
       motionFrame = undefined;
       expansion = target;
       clearMotionStyles();
+      setContentReady(index);
     }
   }
   drawFrame(started);
