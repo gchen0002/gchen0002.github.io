@@ -83,29 +83,52 @@ button:focus-visible {
   height: 100svh;
   min-height: 630px;
   margin: auto;
-  padding: 28px 48px 64px;
+  padding: 28px 48px 24px;
   display: flex;
   flex-direction: column;
 }
-.topbar {
+.personal-footer {
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-top: 24px;
+}
+.personal-links {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-end;
-  flex: 0 0 42px;
+  gap: 24px;
 }
-.topbar nav {
-  display: flex;
-  gap: 30px;
-  font-size: 13px;
+.personal-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 136px;
+  min-height: 56px;
+  padding: 10px 24px;
+  border: 1px solid #505054;
+  border-radius: 999px;
+  background: #18181b;
+  box-shadow: 0 4px 16px #0003, inset 0 1px 0 #ffffff05;
+  font-family: var(--hand);
+  font-size: 24px;
+  line-height: 1;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
-.topbar nav a {
-  padding: 10px 0;
+.personal-links svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
 }
-.topbar nav span {
-  padding-left: 4px;
+@media (hover: hover) {
+  .personal-links a:hover {
+    background: #232326;
+    border-color: #89898f;
+    transform: translateY(-2px);
+  }
 }
-.topbar nav a:hover {
-  color: #fff275;
+.personal-links a:active {
+  transform: translateY(0);
 }
 .intro {
   display: flex;
@@ -743,9 +766,11 @@ button:focus-visible {
   }
 }
 @media (max-height: 750px) and (min-width: 761px) {
+  .personal-footer { padding-top: 16px; }
+  .personal-links a { min-height: 48px; }
   .portfolio {
     padding-top: 18px;
-    padding-bottom: 32px;
+    padding-bottom: 18px;
     min-height: 600px;
   }
   .intro {
@@ -809,13 +834,9 @@ button:focus-visible {
     padding: 17px 18px 24px;
     min-height: 680px;
   }
-  .topbar {
-    flex-basis: 34px;
-  }
-  .topbar nav {
-    font-size: 11px;
-    gap: 21px;
-  }
+  .personal-footer { padding-top: 16px; }
+  .personal-links { gap: 18px; }
+  .personal-links a { min-width: 128px; min-height: 48px; font-size: 22px; }
   .intro {
     flex: 0 0 142px;
     align-items: start;
