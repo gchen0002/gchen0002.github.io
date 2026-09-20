@@ -1,0 +1,147 @@
+---
+const diagrams = [
+  {
+    layout: 'wide', width: 348, height: 328,
+    nodes: [
+      { name: 'Log agent', detail: 'Tail & batch', x: 16, y: 18, width: 124, height: 60, phase: '0s' },
+      { name: 'Queue', detail: 'Durable delivery', x: 208, y: 18, width: 124, height: 60, phase: '0.8s' },
+      { name: 'API + SQLite', detail: 'Persist & index', x: 104, y: 134, width: 140, height: 64, phase: '1.6s' },
+      { name: 'Search', detail: 'Full-text · FTS5', x: 16, y: 252, width: 142, height: 60, phase: '2.4s' },
+      { name: 'Anomalies', detail: 'Isolation Forest', x: 190, y: 252, width: 142, height: 60, phase: '2.7s' },
+    ],
+    edges: [
+      { path: 'M140 48H208', phase: '0s' },
+      { path: 'M270 78V96Q270 112 254 112H190Q174 112 174 128V134', phase: '0.8s' },
+      { path: 'M154 198V218Q154 234 138 234H103Q87 234 87 250V252', phase: '1.6s' },
+      { path: 'M194 198V218Q194 234 210 234H245Q261 234 261 250V252', phase: '1.9s' },
+    ],
+    ports: [[140, 48], [208, 48], [270, 78], [174, 134], [154, 198], [194, 198], [87, 252], [261, 252]],
+  },
+  {
+    layout: 'narrow', width: 150, height: 322,
+    nodes: [
+      { name: 'Log agent', detail: 'Tail & batch', x: 23, y: 10, width: 104, height: 48, phase: '0s' },
+      { name: 'Queue', detail: 'Persist', x: 23, y: 88, width: 104, height: 48, phase: '0.8s' },
+      { name: 'API + SQLite', detail: 'Index logs', x: 23, y: 166, width: 104, height: 48, phase: '1.6s' },
+      { name: 'Search', detail: 'FTS5', x: 3, y: 264, width: 68, height: 48, phase: '2.4s' },
+      { name: 'Detect', detail: 'Anomalies', x: 79, y: 264, width: 68, height: 48, phase: '2.7s' },
+    ],
+    edges: [
+      { path: 'M75 58V88', phase: '0s' },
+      { path: 'M75 136V166', phase: '0.8s' },
+      { path: 'M62 214V231Q62 241 52 241H47Q37 241 37 251V264', phase: '1.6s' },
+      { path: 'M88 214V231Q88 241 98 241H103Q113 241 113 251V264', phase: '1.9s' },
+    ],
+    ports: [[75, 58], [75, 88], [75, 136], [75, 166], [62, 214], [88, 214], [37, 264], [113, 264]],
+  },
+] as const;
+---
+<figure class="pipeline-preview" aria-label="Animated architecture illustration: a C++ log agent sends batches to a durable queue, then the API stores logs in SQLite for full-text search and anomaly detection.">
+  <figcaption class="pipeline-heading">
+    <span><span class="pipeline-terminal" aria-hidden="true">›_</span> Log pipeline</span>
+    <span class="pipeline-demo">Flow demo</span>
+  </figcaption>
+  <div class="pipeline-canvas">
+    {diagrams.map(diagram => (
+      <svg class={`pipeline-graph pipeline-${diagram.layout}`} viewBox={`0 0 ${diagram.width} ${diagram.height}`} fill="none" aria-hidden="true">
+        {diagram.edges.map(edge => (
+          <>
+            <path class="pipeline-wire" d={edge.path} />
+            <path class="pipeline-packet flow-motion" d={edge.path} pathLength="100" style={`--phase: ${edge.phase}`} />
+          </>
+        ))}
+        {diagram.nodes.map(node => (
+          <g class="pipeline-node" style={`--phase: ${node.phase}`}>
+            <title>{node.name}: {node.detail}</title>
+            <rect class="node-surface" x={node.x} y={node.y} width={node.width} height={node.height} rx="9" />
+            <rect class="node-highlight flow-motion" x={node.x} y={node.y} width={node.width} height={node.height} rx="9" />
+            <text class="node-name" x={node.x + 12} y={node.y + (diagram.layout === 'wide' ? 25 : 20)}>{node.name}</text>
+            <text class="node-detail" x={node.x + 12} y={node.y + (diagram.layout === 'wide' ? 44 : 36)}>{node.detail}</text>
+          </g>
+        ))}
+        {diagram.ports.map(([x, y]) => <circle class="pipeline-port" cx={x} cy={y} r="2.6" />)}
+      </svg>
+    ))}
+  </div>
+  <div class="pipeline-caption"><span class="pipeline-status" aria-hidden="true"></span><span>Collect. Persist. Understand.</span></div>
+</figure>
+
+<style>
+  .pipeline-preview {
+    container: pipeline / inline-size;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    border: 1px solid #343039;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #111113;
+    color: #eeebf3;
+    box-shadow: 0 12px 30px #24163b18;
+  }
+  .pipeline-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 16px 13px;
+    border-bottom: 1px solid #ffffff0c;
+    font-size: 12px;
+    font-weight: 550;
+  }
+  .pipeline-heading > span:first-child { display: flex; align-items: center; gap: 8px; }
+  .pipeline-terminal { color: #bca5ff; font-family: var(--mono); font-size: 18px; }
+  .pipeline-demo { color: #99939f; font-size: 9px; font-weight: 400; white-space: nowrap; }
+  .pipeline-canvas {
+    padding: 12px 4px 4px;
+    background-image: radial-gradient(#ffffff10 0.7px, transparent 0.7px);
+    background-size: 15px 15px;
+  }
+  .pipeline-graph { width: 100%; height: auto; overflow: hidden; }
+  .pipeline-narrow { display: none; }
+  .pipeline-wire { stroke: #48434e; stroke-width: 1.2; }
+  .pipeline-packet {
+    stroke: #c9b4ff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 14 100;
+    stroke-dashoffset: 110;
+    opacity: 0;
+    animation: pipeline-flow 5.6s linear var(--phase) infinite;
+  }
+  .node-surface { fill: #19181c; stroke: #3d3943; stroke-width: 1; }
+  .node-highlight { fill: #bba1ff08; stroke: #c7aaff; opacity: 0; animation: pipeline-node 5.6s ease-out var(--phase) infinite; }
+  .node-name { fill: #eeeaf4; font: 13px 'DM Sans Variable', sans-serif; font-weight: 550; }
+  .node-detail { fill: #aaa3b2; font: 10px 'DM Sans Variable', sans-serif; }
+  .pipeline-port { fill: #73677f; }
+  .pipeline-node:hover .node-surface { stroke: #b69bd5; fill: #211c29; }
+  .pipeline-caption { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-top: 1px solid #ffffff0c; font-size: 10px; color: #b5aabd; }
+  .pipeline-status { width: 5px; height: 5px; border-radius: 50%; background: #bca5ff; flex: none; }
+  .flow-motion { animation-play-state: paused; }
+  :global(.panel[data-content-ready="true"]) .flow-motion { animation-play-state: running; }
+  @keyframes pipeline-flow {
+    0%, 7% { opacity: 0; stroke-dashoffset: 110; }
+    10% { opacity: 1; }
+    28% { opacity: 1; stroke-dashoffset: -15; }
+    32%, 100% { opacity: 0; stroke-dashoffset: -15; }
+  }
+  @keyframes pipeline-node {
+    0%, 8%, 42%, 100% { opacity: 0; }
+    16%, 24% { opacity: 0.8; }
+  }
+  @container pipeline (max-width: 220px) {
+    .pipeline-wide { display: none; }
+    .pipeline-narrow { display: block; }
+    .pipeline-heading { padding: 10px 8px; font-size: 10px; }
+    .pipeline-heading > span:first-child { gap: 4px; }
+    .pipeline-terminal { font-size: 14px; }
+    .pipeline-demo, .pipeline-caption { display: none; }
+    .pipeline-canvas { padding: 7px 1px; }
+    .node-name { font-size: 11px; }
+    .node-detail { font-size: 9px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flow-motion { animation: none; }
+  }
+</style>

@@ -482,7 +482,8 @@ button:focus-visible {
 }
 .preview-kickpost,
 .preview-esports,
-.preview-rito {
+.preview-rito,
+.preview-logs {
   display: flex;
   align-items: center;
 }
@@ -522,8 +523,7 @@ button:focus-visible {
   color: #e9e9ed;
 }
 .research-preview,
-.extension-preview,
-.logs-preview {
+.extension-preview {
   height: 100%;
   border-radius: 12px;
   background: #11151d;
@@ -660,59 +660,7 @@ button:focus-visible {
   color: #aaa;
   padding-top: 15px;
 }
-.logs-preview {
-  background: #191621;
-}
-.logs-preview .mini-mark {
-  color: #c7b0ff;
-}
-.log-flow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-  font-family: var(--mono);
-  font-size: 7px;
-  margin: 30px 0 25px;
-  color: #c4b1e9;
-}
-.log-flow > span:nth-child(odd) {
-  border: 1px solid #594675;
-  border-radius: 3px;
-  padding: 9px 5px;
-}
-.log-lines {
-  font-size: 7px;
-  letter-spacing: -0.02em;
-  line-height: 2.8;
-  color: #c0b7ce;
-}
-.log-lines b {
-  font-weight: 400;
-  color: #e0d1ff;
-  margin-right: 5px;
-}
-.log-time {
-  color: #7a688d;
-  margin-right: 7px;
-}
-.log-summary {
-  border-top: 1px solid #3c304b;
-  margin-top: 20px;
-  padding-top: 18px;
-}
-.log-summary strong {
-  font-weight: 400;
-  font-size: 19px;
-  letter-spacing: -0.03em;
-  line-height: 1.25;
-}
-.log-summary .mono {
-  display: block;
-  font-size: 6px;
-  color: #9e89b8;
-  margin-top: 12px;
-}
+
 .no-script-links {
   display: flex;
   flex-wrap: wrap;
@@ -774,17 +722,10 @@ button:focus-visible {
     gap: 7px;
     font-size: 6px;
   }
-  .research-preview,
-  .logs-preview {
+  .research-preview {
     padding: 13px;
   }
-  .log-lines {
-    font-size: 6px;
-  }
-  .log-flow {
-    font-size: 6px;
-    gap: 2px;
-  }
+
 }
 @media (max-height: 750px) and (min-width: 761px) {
   .personal-footer { padding-top: 16px; }
@@ -842,13 +783,7 @@ button:focus-visible {
   .extension-bottom {
     padding-top: 8px;
   }
-  .log-flow {
-    margin: 23px 0 17px;
-  }
-  .log-summary {
-    margin-top: 10px;
-    padding-top: 10px;
-  }
+
 }
 @media (max-width: 760px) {
   .portfolio {
@@ -999,8 +934,7 @@ button:focus-visible {
   .panel-stack { gap: 8px 13px; }
   .technology { font-size: 11px; gap: 5px; }
   .technology-icon { width: 16px; height: 16px; }
-  .research-preview,
-  .logs-preview {
+  .research-preview {
     padding: 11px;
     border-radius: 9px;
   }
@@ -1075,32 +1009,7 @@ button:focus-visible {
   .extension-bottom {
     display: none;
   }
-  .log-flow {
-    flex-wrap: wrap;
-    margin: 18px 0;
-    font-size: 5px;
-    gap: 3px;
-  }
-  .log-flow > span:nth-child(odd) {
-    padding: 4px;
-  }
-  .log-lines {
-    font-size: 5px;
-    line-height: 2.5;
-  }
-  .log-time {
-    display: none;
-  }
-  .log-summary {
-    margin-top: 13px;
-    padding-top: 13px;
-  }
-  .log-summary strong {
-    font-size: 13px;
-  }
-  .log-summary .mono {
-    display: none;
-  }
+
 }
 @media (prefers-reduced-motion: reduce) {
   *,
