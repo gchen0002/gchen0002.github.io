@@ -7,5 +7,5 @@ const words = [
 ---
 <h1 id="greeting">
   <span class="sr-only">Hello, I’m Guanying</span>
-  <span class="greeting-writing" aria-hidden="true">{words.map((word, index) => <><span class="handwritten-word">{Array.from(word.text).map((letter, position) => <span class="handwritten-letter" data-letter={letter} style={`--letter-delay: ${200 + (word.start + position) * 75}ms`}>{letter}</span>)}</span>{index === 0 && <> <span class="wave">👋</span></>}{index < words.length - 1 && ' '}</>)}</span>
+  <span class="greeting-writing" aria-hidden="true">{words.map((word, index) => <><span class="handwritten-word">{Array.from(word.text).map((letter, position) => <span class="handwritten-letter" data-letter={letter} style={`--letter-delay: ${500 + (word.start + position) * 90}ms`}>{letter}</span>)}</span>{index === 0 && <> <span class="wave">👋</span></>}{index < words.length - 1 && ' '}</>)}</span>
 </h1>

@@ -124,9 +124,17 @@ button:focus-visible {
 }
 .handwritten-word { white-space: nowrap; }
 .handwritten-letter { position: relative; display: inline-block; }
-/* A dim ink guide keeps the complete greeting visible while each letter reveals. */
+/* An outline guide shows the letter shapes before the ink fills them. */
 @media (prefers-reduced-motion: no-preference) {
-  .handwritten-letter { color: #858580; }
+  .handwritten-letter { color: transparent; }
+  .handwritten-letter::before {
+    content: attr(data-letter);
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    -webkit-text-stroke: 0.75px rgba(245, 243, 238, 0.48);
+    animation: clear-letter-guide 360ms steps(1, end) var(--letter-delay) both;
+  }
   .handwritten-letter::after {
     content: attr(data-letter);
     position: absolute;
@@ -135,6 +143,10 @@ button:focus-visible {
     animation: write-letter 360ms cubic-bezier(0.2, 0.6, 0.35, 1) var(--letter-delay) both;
   }
   .greeting-writing .wave { animation: greeting-wave 850ms ease-in-out 500ms both; }
+}
+@keyframes clear-letter-guide {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 @keyframes write-letter {
   from { clip-path: inset(-0.2em 110% -0.2em -0.15em); }
