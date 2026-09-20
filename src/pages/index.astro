@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import ProjectIcon from '../components/ProjectIcon.astro';
+import TechnologyStack from '../components/TechnologyStack.astro';
 import HandwrittenGreeting from '../components/HandwrittenGreeting.astro';
 import kickpostHomepage from '../assets/kickpost-homepage.png';
 import kickpostMobile from '../assets/kickpost-mobile.png';
@@ -10,10 +11,10 @@ import esportsMobile from '../assets/esports-mobile.png';
 import ritoPreview from '../assets/rito-store.png';
 
 const projects = [
-  { id: 'kickpost', title: 'KickPost', category: 'EXPERIENCE', caption: 'FULL-STACK DEVELOPMENT', stack: 'REACT / NODE.JS / POSTGRESQL / AWS', role: 'Full-Stack Developer Intern', date: 'JUL 2026 — PRESENT', description: 'I work across the product: faster database queries, real-time updates, and smoother deployments.', detail: 'From PostgreSQL to React, with a focus on making the everyday experience better.', url: 'https://www.kickpost.io/', link: 'Visit KickPost', secondary: '/resume.pdf', secondaryLabel: 'My résumé' },
-  { id: 'esports', title: 'Esports Analytics', category: 'PROJECT', caption: 'RESEARCH PLATFORM', stack: 'REACT / TYPESCRIPT / EFFECT / CLOUDFLARE', role: 'A closer look at the game.', date: 'LOL & VALORANT', description: 'Player stats, explainable models, and match research, together in one workspace.', detail: 'Compare teams, explore historical performance, and save research with outcome tracking.', url: 'https://esports-prop-research.pages.dev', link: 'Open the platform', secondary: undefined, secondaryLabel: undefined },
-  { id: 'rito', title: 'RitoEsports Tracker', category: 'PROJECT', caption: 'CHROME EXTENSION', stack: 'TYPESCRIPT / EFFECT / AWS', role: 'Your next match, one click away.', date: 'JUN 2025 — PRESENT', description: 'Esports schedules, streams, and live alerts, right in your browser.', detail: 'An Effect-based AWS pipeline keeps LoL and VALORANT schedules up to date, with cached results when a refresh fails.', url: 'https://chromewebstore.google.com/detail/ritoesports-tracker/eldpjindebiejpnpclddndcnmefbbooi', link: 'View extension', secondary: undefined, secondaryLabel: undefined },
-  { id: 'logs', title: 'Log Aggregation', category: 'PROJECT', caption: 'DISTRIBUTED SYSTEMS', stack: 'C++17 / TYPESCRIPT / PYTHON / SQLITE', role: 'From scattered logs to answers.', date: '5 CONNECTED SERVICES', description: 'A distributed log platform with real-time search, anomaly detection, and a monitoring dashboard.', detail: 'A C++ file-tail agent, persistent queues, and SQLite full-text search keep the whole flow connected.', url: 'https://github.com/gchen0002/Log-Aggregation-System', link: 'Explore the code', secondary: undefined, secondaryLabel: undefined },
+  { id: 'kickpost', title: 'KickPost', category: 'EXPERIENCE', caption: 'FULL-STACK DEVELOPMENT', stack: ['react', 'nodedotjs', 'postgresql', 'aws'], role: 'Full-Stack Developer Intern', date: 'Jul 2026 — Present', description: 'I help make KickPost faster and easier to use.', detail: 'Optimizing PostgreSQL queries, building real-time features, and improving deployments.', url: 'https://www.kickpost.io/', link: 'Visit KickPost' },
+  { id: 'esports', title: 'Esports Analytics', category: 'PROJECT', caption: 'RESEARCH PLATFORM', stack: ['react', 'typescript', 'effect', 'cloudflare'], role: 'A closer look at the game.', date: 'LoL & VALORANT', description: 'Player stats, explainable models, and match research, together in one workspace.', detail: 'Compare teams, explore historical performance, and save research with outcome tracking.', url: 'https://esports-prop-research.pages.dev', link: 'Open the platform' },
+  { id: 'rito', title: 'RitoEsports Tracker', category: 'PROJECT', caption: 'CHROME EXTENSION', stack: ['typescript', 'effect', 'aws'], role: 'Your next match, one click away.', date: 'Jun 2025 — Present', description: 'Esports schedules, streams, and live alerts, right in your browser.', detail: 'An Effect-based AWS pipeline keeps LoL and VALORANT schedules up to date, with cached results when a refresh fails.', url: 'https://chromewebstore.google.com/detail/ritoesports-tracker/eldpjindebiejpnpclddndcnmefbbooi', link: 'View extension' },
+  { id: 'logs', title: 'Log Aggregation', category: 'PROJECT', caption: 'DISTRIBUTED SYSTEMS', stack: ['cplusplus', 'typescript', 'python', 'sqlite'], role: 'From scattered logs to answers.', date: '5 connected services', description: 'A distributed log platform with real-time search, anomaly detection, and a monitoring dashboard.', detail: 'A C++ file-tail agent, persistent queues, and SQLite full-text search keep the whole flow connected.', url: 'https://github.com/gchen0002/Log-Aggregation-System', link: 'Explore the code' },
 ] as const;
 ---
 <Layout>
@@ -48,10 +49,10 @@ const projects = [
               <div>
                 <h3>{project.title}</h3>
                 <p class="project-role">{project.role}</p>
-                <p class="project-date mono">{project.date}</p>
+                <p class="project-date">{project.date}</p>
               </div>
               <div class="project-description"><span class="short-rule" aria-hidden="true"></span><p>{project.description}</p><p class="project-detail">{project.detail}</p></div>
-              <div class="project-links"><a class="project-link" href={project.url} target="_blank" rel="noopener noreferrer">{project.link}<span aria-hidden="true">↗</span></a>{project.secondary && <a class="secondary-link" href={project.secondary} target="_blank" rel="noopener noreferrer">{project.secondaryLabel} <span aria-hidden="true">↗</span></a>}</div>
+              <div class="project-links"><a class="project-link" href={project.url} target="_blank" rel="noopener noreferrer">{project.link}<span aria-hidden="true">↗</span></a></div>
             </div>
 
             <div class={`preview preview-${project.id}`}>
@@ -60,7 +61,7 @@ const projects = [
               {project.id === 'rito' && <a class="website-preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label="View RitoEsports Tracker in the Chrome Web Store"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>RitoEsports Tracker</span><span aria-hidden="true">↗</span></div><div class="website-capture rito-capture"><Image src={ritoPreview} width={1100} format="webp" alt="RitoEsports Tracker’s published screenshot showing live matches, upcoming schedules, and stream links" loading="lazy" /></div><span class="website-caption"><span>View extension</span><span aria-hidden="true">↗</span></span></a>}
               {project.id === 'logs' && <div class="logs-preview" aria-label="Illustration of the log aggregation architecture"><div class="mini-heading"><span class="mini-mark">›_</span><span>Log pipeline</span></div><div class="log-flow"><span>TAIL</span><span>→</span><span>QUEUE</span><span>→</span><span>STORE</span></div><div class="log-lines mono"><p><span class="log-time">01</span><b>agent</b> watch file changes</p><p><span class="log-time">02</span><b>queue</b> batch & persist</p><p><span class="log-time">03</span><b>search</b> index with FTS5</p><p><span class="log-time">04</span><b>detect</b> find anomalies</p></div><div class="log-summary"><strong>Many sources.<br/>One place to look.</strong><span class="mono">C++17 → SQLITE → PYTHON</span></div></div>}
             </div>
-            <p class="panel-stack mono">{project.stack}</p>
+            <TechnologyStack technologies={project.stack} />
           </div>
         </article>
       ))}

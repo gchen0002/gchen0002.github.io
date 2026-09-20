@@ -392,38 +392,41 @@ button:focus-visible {
   gap: 18px;
 }
 .panel-copy h3 {
-  font-size: clamp(27px, 2.9vw, 41px);
+  font-size: clamp(32px, 2.9vw, 42px);
   line-height: 1.02;
   font-weight: 750;
   letter-spacing: -0.055em;
 }
 .project-role {
-  font-size: clamp(13px, 1.25vw, 18px);
+  font-size: clamp(16px, 1.35vw, 19px);
   font-weight: 650;
   line-height: 1.4;
   margin-top: 9px;
   letter-spacing: -0.02em;
 }
 .project-date {
-  font-size: 8px;
-  margin-top: 9px;
-  letter-spacing: 0.08em;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 10px;
+  font-weight: 500;
+  opacity: 0.8;
 }
 .short-rule {
   display: block;
-  width: 29px;
+  width: 40px;
   border-top: 1px solid;
   margin-bottom: 14px;
 }
 .project-description {
-  font-size: 12px;
-  line-height: 1.65;
+  font-size: 18px;
+  line-height: 1.5;
   letter-spacing: -0.01em;
 }
 .project-detail {
-  margin-top: 9px;
-  opacity: 0.76;
-  font-size: 11px;
+  margin-top: 12px;
+  opacity: 0.8;
+  font-size: 15px;
+  line-height: 1.55;
 }
 .project-links {
   display: flex;
@@ -436,24 +439,40 @@ button:focus-visible {
   align-items: center;
   gap: 16px;
   border-bottom: 1px solid;
-  padding: 4px 0;
-  font-size: 12px;
-  font-weight: 550;
+  padding: 7px 0;
+  font-size: 15px;
+  font-weight: 600;
 }
 .project-link:hover {
   opacity: 0.7;
 }
-.secondary-link {
-  font-size: 10px;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  opacity: 0.8;
-}
+
 .panel-stack {
   grid-column: 1 / -1;
-  font-size: 7px;
-  letter-spacing: 0.04em;
-  line-height: 1.8;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.technology {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.technology-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  background: currentColor;
+  mask: var(--technology-icon) center / contain no-repeat;
 }
 .preview {
   min-width: 0;
@@ -834,7 +853,7 @@ button:focus-visible {
 @media (max-width: 760px) {
   .portfolio {
     padding: 17px 18px 24px;
-    min-height: 680px;
+    min-height: 800px;
   }
   .personal-footer { padding-top: 16px; }
   .personal-links { gap: 18px; }
@@ -952,18 +971,18 @@ button:focus-visible {
     font-size: 28px;
   }
   .project-role {
-    font-size: 12px;
+    font-size: 14px;
     margin-top: 6px;
   }
   .project-date {
-    font-size: 6px;
+    font-size: 10px;
     margin-top: 6px;
   }
   .short-rule {
     display: none;
   }
   .project-description {
-    font-size: 10px;
+    font-size: 14px;
     line-height: 1.5;
   }
   .project-detail {
@@ -973,16 +992,13 @@ button:focus-visible {
     gap: 8px 12px;
   }
   .project-link {
-    font-size: 10px;
+    font-size: 13px;
     gap: 7px;
   }
-  .secondary-link {
-    font-size: 8px;
-  }
-  .panel-stack {
-    font-size: 5px;
-    letter-spacing: 0.02em;
-  }
+
+  .panel-stack { gap: 8px 13px; }
+  .technology { font-size: 11px; gap: 5px; }
+  .technology-icon { width: 16px; height: 16px; }
   .research-preview,
   .logs-preview {
     padding: 11px;

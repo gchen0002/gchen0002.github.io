@@ -1,0 +1,27 @@
+---
+const labels = {
+  react: 'React',
+  nodedotjs: 'Node.js',
+  postgresql: 'PostgreSQL',
+  aws: 'AWS',
+  typescript: 'TypeScript',
+  effect: 'Effect',
+  cloudflare: 'Cloudflare',
+  cplusplus: 'C++17',
+  python: 'Python',
+  sqlite: 'SQLite',
+} as const;
+
+interface Props {
+  technologies: readonly (keyof typeof labels)[];
+}
+const { technologies } = Astro.props;
+---
+<ul class="panel-stack" aria-label="Technologies used">
+  {technologies.map(technology => (
+    <li class="technology">
+      <span class="technology-icon" style={`--technology-icon: url('/icons/technology/${technology}.svg')`} aria-hidden="true"></span>
+      <span>{labels[technology]}</span>
+    </li>
+  ))}
+</ul>
