@@ -1,3 +1,4 @@
+import "./easter-eggs";
 import { createRollingNumber } from "@kitlangton/rolling-number";
 import "@kitlangton/rolling-number/styles.css";
 

@@ -102,6 +102,7 @@ button:focus-visible {
   padding-top: 24px;
 }
 .personal-links {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -201,6 +202,7 @@ button:focus-visible {
   letter-spacing: -0.02em;
 }
 .local-clock {
+  position: relative;
   margin-right: 3px;
   flex: 0 0 auto;
 }

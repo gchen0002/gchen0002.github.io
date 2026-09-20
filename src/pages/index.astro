@@ -1,6 +1,8 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import ClockCat from '../components/ClockCat.astro';
+import FooterPlane from '../components/FooterPlane.astro';
 import ProjectIcon from '../components/ProjectIcon.astro';
 import TechnologyStack from '../components/TechnologyStack.astro';
 import LogPipeline from '../components/LogPipeline.astro';
@@ -32,6 +34,7 @@ const projects = [
         <p>Junior at Cal State LA</p>
       </div>
       <div class="local-clock" aria-label="Current time in Los Angeles">
+        <ClockCat />
         <div class="clock-face" aria-hidden="true"><span class="clock-pair"><span class="clock-digit"><span id="clock-digit-0">-</span></span><span class="clock-digit"><span id="clock-digit-1">-</span></span></span><span class="clock-colon">:</span><span class="clock-pair"><span class="clock-digit"><span id="clock-digit-2">-</span></span><span class="clock-digit"><span id="clock-digit-3">-</span></span></span><span class="clock-period" id="clock-period">PT</span></div>
         <span class="clock-label">LOS ANGELES</span>
         <span class="sr-only" id="clock-readable">Los Angeles local time</span>
@@ -75,6 +78,7 @@ const projects = [
     <noscript><p class="no-script-links">Explore: {projects.map(project => <a href={project.url}>{project.title} ↗</a>)}</p></noscript>
     <footer class="personal-footer">
       <nav class="personal-links" aria-label="Personal links">
+        <FooterPlane />
         <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
           <span>Résumé</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h6"/></svg>
