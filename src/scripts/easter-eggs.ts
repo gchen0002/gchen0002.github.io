@@ -5,9 +5,9 @@ const paper = document.querySelector<HTMLElement>("[data-paper-surprise]");
 const paperButton = paper?.querySelector<HTMLButtonElement>("button");
 const paperNote = document.querySelector<HTMLElement>("[data-paper-note]");
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-const storageKey = "portfolio.easter-eggs.seen";
+const storageKey = "portfolio.easter-eggs.seen.v2";
 let revealed = false;
-let remaining = 60_000;
+let remaining = 10_000;
 let viewingSince: number | undefined;
 let revealTimer: ReturnType<typeof setTimeout> | undefined;
 let sleepTimer: ReturnType<typeof setTimeout> | undefined;
@@ -39,14 +39,14 @@ function revealSurprises(restored = false) {
   if (restored) putCatToSleep();
   else {
     cat.dataset.entering = "";
-    sleepTimer = setTimeout(putCatToSleep, 9_000);
+    sleepTimer = setTimeout(putCatToSleep, 20_000);
   }
   try { sessionStorage.setItem(storageKey, "yes"); }
   catch { /* The reveal still works when browser storage is unavailable. */ }
 }
 
 function resumeViewing() {
-  if (revealed || viewingSince !== undefined || document.hidden || !document.hasFocus()) return;
+  if (revealed || viewingSince !== undefined || document.hidden) return;
   viewingSince = performance.now();
   revealTimer = setTimeout(() => revealSurprises(), remaining);
 }
@@ -112,8 +112,6 @@ paperButton?.addEventListener("click", () => {
 motionPreference.addEventListener("change", () => {
   if (motionPreference.matches) flight?.cancel();
 });
-window.addEventListener("blur", pauseViewing);
-window.addEventListener("focus", resumeViewing);
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     pauseViewing();

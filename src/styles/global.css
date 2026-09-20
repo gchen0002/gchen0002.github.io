@@ -1045,3 +1045,22 @@ button:focus-visible {
   .rito-capture { aspect-ratio: 752 / 674; }
   .rito-capture img { width: 170.213%; max-width: none; margin-left: -35.106%; margin-top: -16.622%; }
 }
+
+.footer-icon {
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  perspective: 100px;
+}
+.personal-links .footer-icon svg { grid-area: 1 / 1; width: 22px; height: 22px; }
+.resume-sheet { transform-origin: 55% 50%; transition: transform 300ms ease, opacity 180ms ease; }
+.resume-plane { opacity: 0; transform: rotate(25deg) scale(.3); transition: opacity 180ms ease, transform 350ms cubic-bezier(.2,.8,.2,1); }
+.personal-links a:is(:hover, :focus-visible) .resume-sheet { transform: rotateY(85deg) rotate(-15deg) scale(.65); opacity: 0; }
+.personal-links a:is(:hover, :focus-visible) .resume-plane { opacity: 1; transform: rotate(-8deg) scale(1); transition-delay: 100ms; }
+@media (prefers-reduced-motion: no-preference) {
+  .personal-links a:is(:hover, :focus-visible) .github-icon { animation: github-hello 650ms ease-in-out both; transform-origin: center 70%; }
+}
+@keyframes github-hello { 0%, 100% { transform: rotate(0); } 25% { transform: translateY(-2px) rotate(-13deg); } 50% { transform: translateY(-2px) rotate(11deg); } 75% { transform: rotate(-6deg); } }
