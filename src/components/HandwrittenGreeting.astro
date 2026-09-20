@@ -1,11 +1,52 @@
 ---
-const words = [
-  { text: 'Hello', start: 0 },
-  { text: 'I’m', start: 6 },
-  { text: 'Guanying', start: 9 },
-];
+// Centerline pen paths, in writing order. Separate paths represent pen lifts.
+const helloStrokes = [
+  ['M29 20 C22 38 17 58 12 78', 150],
+  ['M65 18 C55 39 49 59 43 78', 150],
+  ['M17 51 Q37 46 57 46', 95],
+  ['M60 66 C85 63 92 45 79 47 C66 48 58 74 70 79 Q82 83 95 69', 230],
+  ['M93 71 C107 51 124 20 115 20 C105 19 93 67 100 77 Q107 83 117 67', 220],
+  ['M117 70 C132 48 146 19 137 20 C128 20 116 68 124 77 Q131 82 141 68', 220],
+  ['M169 51 C158 41 143 51 143 67 C143 85 163 82 172 63 C180 45 162 42 157 51', 220],
+] as const;
+const nameStrokes = [
+  ['M15 25 Q29 22 43 21', 65],
+  ['M33 22 Q28 48 18 78', 135],
+  ['M7 81 Q23 77 37 76', 65],
+  ['M55 23 Q55 31 49 36', 55],
+  ['M43 77 L54 49 Q57 44 53 61 C64 47 73 42 75 51 Q76 55 67 77 C79 52 89 42 94 49 C99 56 83 82 101 73', 285],
+  ['M176 31 C169 13 146 18 133 40 C117 66 128 85 147 79 Q165 71 172 51', 280],
+  ['M153 55 L174 51 Q163 78 181 69', 115],
+  ['M191 49 C184 62 179 81 190 79 C200 78 210 60 216 48 C209 63 204 83 218 76', 205],
+  ['M246 54 C240 40 224 50 221 68 C218 87 239 78 247 51', 175],
+  ['M247 51 C242 67 237 83 255 73', 95],
+  ['M256 76 L266 49 L260 68 C276 46 285 42 289 50 C292 57 279 78 292 76 Q298 74 302 69', 210],
+  ['M309 50 C299 69 302 80 311 76 Q324 69 331 49 C327 71 320 105 309 105 C294 105 318 78 341 66', 295],
+  ['M348 49 C343 62 336 82 350 77 Q356 74 360 68', 125],
+  ['M353 35 L353.4 34.5', 45],
+  ['M360 77 L370 49 L364 68 C380 46 389 43 393 51 C396 58 383 79 396 76 Q401 74 405 69', 210],
+  ['M434 54 C427 40 408 50 404 67 C400 85 423 77 432 53', 180],
+  ['M435 49 C429 80 421 109 410 105 C397 100 431 79 451 66', 240],
+] as const;
+let penTime = 180;
+function schedule([d, duration]: readonly [string, number]) {
+  const stroke = { d, duration, delay: penTime };
+  penTime += duration + 25;
+  return stroke;
+}
+const hello = helloStrokes.map(schedule);
+penTime += 140;
+const name = nameStrokes.map(schedule);
 ---
 <h1 id="greeting">
   <span class="sr-only">Hello, I’m Guanying</span>
-  <span class="greeting-writing" aria-hidden="true">{words.map((word, index) => <><span class="handwritten-word">{Array.from(word.text).map((letter, position) => <span class="handwritten-letter" data-letter={letter} style={`--letter-delay: ${500 + (word.start + position) * 90}ms`}>{letter}</span>)}</span>{index === 0 && <> <span class="wave">👋</span></>}{index < words.length - 1 && ' '}</>)}</span>
+  <span class="greeting-writing" aria-hidden="true">
+    <svg class="pen-word pen-hello" viewBox="0 0 184 110" fill="none" focusable="false">
+      {hello.map(stroke => <path class="pen-stroke" d={stroke.d} pathLength="1" style={`--stroke-delay: ${stroke.delay}ms; --stroke-duration: ${stroke.duration}ms`} />)}
+    </svg>
+    <span class="wave">👋</span>
+    <svg class="pen-word pen-name" viewBox="0 0 460 110" fill="none" focusable="false">
+      {name.map(stroke => <path class="pen-stroke" d={stroke.d} pathLength="1" style={`--stroke-delay: ${stroke.delay}ms; --stroke-duration: ${stroke.duration}ms`} />)}
+    </svg>
+  </span>
 </h1>

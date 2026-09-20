@@ -122,23 +122,32 @@ button:focus-visible {
   line-height: 1.12;
   letter-spacing: 0.005em;
 }
-.handwritten-word { white-space: nowrap; }
-.handwritten-letter { position: relative; display: inline-block; }
-/* Reveal the ink directly, without a visible guide underneath. */
-@media (prefers-reduced-motion: no-preference) {
-  .handwritten-letter { color: transparent; }
-  .handwritten-letter::after {
-    content: attr(data-letter);
-    position: absolute;
-    inset: 0;
-    color: #f5f3ee;
-    animation: write-letter 360ms cubic-bezier(0.2, 0.6, 0.35, 1) var(--letter-delay) both;
-  }
-  .greeting-writing .wave { animation: greeting-wave 850ms ease-in-out 500ms both; }
+.greeting-writing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.12em;
+  vertical-align: middle;
 }
-@keyframes write-letter {
-  from { clip-path: inset(-0.2em 110% -0.2em -0.15em); }
-  to { clip-path: inset(-0.2em -0.15em -0.2em -0.15em); }
+.pen-word { height: 1.2em; overflow: visible; flex: none; }
+.pen-hello { width: 2.0073em; }
+.pen-name { width: 5.0182em; }
+.pen-stroke {
+  stroke: currentColor;
+  stroke-width: 4.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pen-stroke {
+    stroke-dasharray: 1;
+    animation: pen-write var(--stroke-duration) linear var(--stroke-delay) both;
+  }
+  .greeting-writing .wave { animation: greeting-wave 850ms ease-in-out 1400ms both; }
+}
+@keyframes pen-write {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  1% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
 }
 @keyframes greeting-wave {
   0%, 100% { transform: rotate(0deg); }
