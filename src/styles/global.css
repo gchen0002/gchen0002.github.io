@@ -1061,6 +1061,12 @@ button:focus-visible {
 .personal-links a:is(:hover, :focus-visible) .resume-sheet { transform: rotateY(85deg) rotate(-15deg) scale(.65); opacity: 0; }
 .personal-links a:is(:hover, :focus-visible) .resume-plane { opacity: 1; transform: rotate(-8deg) scale(1); transition-delay: 100ms; }
 @media (prefers-reduced-motion: no-preference) {
-  .personal-links a:is(:hover, :focus-visible) .github-icon { animation: github-hello 650ms ease-in-out both; transform-origin: center 70%; }
+  .personal-links a:is(:hover, :focus-visible) .github-icon { animation: octocat-bounce 700ms ease-in-out both; transform-origin: center bottom; }
 }
-@keyframes github-hello { 0%, 100% { transform: rotate(0); } 25% { transform: translateY(-2px) rotate(-13deg); } 50% { transform: translateY(-2px) rotate(11deg); } 75% { transform: rotate(-6deg); } }
+@keyframes octocat-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  15% { transform: translateY(0) scale(1.13, .85); }
+  38% { transform: translateY(-8px) scale(.94, 1.08); }
+  60% { transform: translateY(0) scale(1.1, .9); }
+  78% { transform: translateY(-3px) scale(.98, 1.03); }
+}

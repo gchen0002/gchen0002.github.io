@@ -2,7 +2,6 @@
 import { Image, getImage } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import ClockCat from '../components/ClockCat.astro';
-import FooterPlane from '../components/FooterPlane.astro';
 import ResumeDialog from '../components/ResumeDialog.astro';
 import ProjectIcon from '../components/ProjectIcon.astro';
 import TechnologyStack from '../components/TechnologyStack.astro';
@@ -79,7 +78,6 @@ const projects = [
     <noscript><p class="no-script-links">Explore: {projects.map(project => <a href={project.url}>{project.title} ↗</a>)}</p></noscript>
     <footer class="personal-footer">
       <nav class="personal-links" aria-label="Personal links">
-        <FooterPlane />
         <a href="/resume.pdf?v=9cc18e18124f" data-resume-open aria-haspopup="dialog" target="_blank" rel="noopener noreferrer">
           <span>Résumé</span>
           <span class="footer-icon" aria-hidden="true"><svg class="resume-sheet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6M8 13h8M8 17h6"/></svg><svg class="resume-plane" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m3 13 25-9-9 25-5-11-11-5Zm11 5L28 4m-14 14-1 8 5-5"/></svg></span>
