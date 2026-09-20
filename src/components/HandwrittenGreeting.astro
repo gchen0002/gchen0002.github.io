@@ -28,14 +28,15 @@ const nameStrokes = [
   ['M434 54 C427 40 408 50 404 67 C400 85 423 77 432 53', 180],
   ['M435 49 C429 80 421 109 410 105 C397 100 431 79 451 66', 240],
 ] as const;
-let penTime = 180;
+let penTime = 100;
 function schedule([d, duration]: readonly [string, number]) {
-  const stroke = { d, duration, delay: penTime };
-  penTime += duration + 25;
+  const strokeDuration = Math.round(duration * 0.6);
+  const stroke = { d, duration: strokeDuration, delay: penTime };
+  penTime += strokeDuration + 15;
   return stroke;
 }
 const hello = helloStrokes.map(schedule);
-penTime += 140;
+penTime += 80;
 const name = nameStrokes.map(schedule);
 ---
 <h1 id="greeting">

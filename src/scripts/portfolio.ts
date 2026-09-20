@@ -9,10 +9,31 @@ const buttons = [
 const contents = [...document.querySelectorAll<HTMLElement>(".panel-content")];
 const hoverPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 let active = -1;
-let keyboardInput = false;
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const panelAnimations = new Set<Animation>();
+
+function cancelPanelMotion() {
+  panelAnimations.forEach((animation) => animation.cancel());
+  panelAnimations.clear();
+}
+
+function panelFrames() {
+  return panels.map((panel) => {
+    const style = getComputedStyle(panel);
+    return { transform: style.transform, clipPath: style.clipPath };
+  });
+}
+
+reducedMotion.addEventListener("change", cancelPanelMotion);
+if (deck) new ResizeObserver(cancelPanelMotion).observe(deck);
 
 function openPanel(index: number) {
   if (index < 0 || index >= panels.length || index === active) return;
+  const animate = active !== -1 && !reducedMotion.matches && deck !== null;
+  // Capture every moving edge before cancelling. Retarget the entire strip from
+  // one shared timestamp, so interrupted transitions cannot separate the cards.
+  const before = animate ? panelFrames() : [];
+  cancelPanelMotion();
   active = index;
   panels.forEach((panel, position) => {
     const expanded = position === index;
@@ -25,27 +46,26 @@ function openPanel(index: number) {
       content.setAttribute("aria-hidden", String(!expanded));
     }
   });
+  if (!animate || !deck) return;
+  const after = panelFrames();
+  const deckStyle = getComputedStyle(deck);
+  const duration = Number.parseFloat(deckStyle.getPropertyValue("--panel-duration"));
+  const easing = deckStyle.getPropertyValue("--panel-ease").trim();
+  const startTime = document.timeline.currentTime;
+  panels.forEach((panel, position) => {
+    const from = before[position];
+    const to = after[position];
+    if (!from || !to) return;
+    const animation = panel.animate([from, to], { duration, easing });
+    if (typeof startTime === "number") animation.startTime = startTime;
+    panelAnimations.add(animation);
+    animation.onfinish = () => panelAnimations.delete(animation);
+  });
 }
-
-document.addEventListener(
-  "keydown",
-  () => {
-    keyboardInput = true;
-  },
-  { capture: true },
-);
-document.addEventListener(
-  "pointerdown",
-  () => {
-    keyboardInput = false;
-  },
-  { capture: true },
-);
 
 panels.forEach((panel, index) => {
   panel.addEventListener("pointerenter", (event) => {
     if (!hoverPointer.matches || event.pointerType === "touch") return;
-    keyboardInput = false;
     // A mouse-focused link must not retain focus inside a panel we are hiding.
     if (
       active !== index &&
@@ -85,25 +105,6 @@ panels.forEach((panel, index) => {
   });
 });
 
-deck?.addEventListener("pointerleave", (event) => {
-  if (!hoverPointer.matches || event.pointerType === "touch") return;
-  if (keyboardInput && deck.contains(document.activeElement)) return;
-  if (
-    document.activeElement instanceof HTMLElement &&
-    deck.contains(document.activeElement)
-  )
-    document.activeElement.blur();
-  openPanel(0);
-});
-deck?.addEventListener("focusout", (event) => {
-  if (
-    !(
-      event.relatedTarget instanceof Node && deck.contains(event.relatedTarget)
-    ) &&
-    keyboardInput
-  )
-    openPanel(0);
-});
 openPanel(0);
 
 // Always format in the owner's time zone, independently of the visitor's locale.

@@ -142,7 +142,7 @@ button:focus-visible {
     stroke-dasharray: 1;
     animation: pen-write var(--stroke-duration) linear var(--stroke-delay) both;
   }
-  .greeting-writing .wave { animation: greeting-wave 850ms ease-in-out 1400ms both; }
+  .greeting-writing .wave { animation: greeting-wave 750ms ease-in-out 850ms both; }
 }
 @keyframes pen-write {
   0% { stroke-dashoffset: 1; opacity: 0; }
@@ -219,13 +219,13 @@ button:focus-visible {
   position: relative;
   overflow: clip;
   container-type: size;
-  --panel-gap: 8px;
+  --panel-gap: 6px;
   --panel-grow: 5.3;
   --rail-size: calc((100cqw - 3 * var(--panel-gap)) / (var(--panel-grow) + 3));
   --expanded-size: calc(var(--rail-size) * var(--panel-grow));
   --panel-radius: 16px;
-  --panel-duration: 620ms;
-  --panel-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --panel-duration: 720ms;
+  --panel-ease: cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   gap: 8px;
   flex: 1 1 auto;
@@ -245,7 +245,7 @@ button:focus-visible {
   color: #111;
   transform: translateX(calc(var(--index) * (var(--rail-size) + var(--panel-gap)) + var(--after-active) * (var(--expanded-size) - var(--rail-size))));
   clip-path: inset(0 calc(100% - var(--rail-size)) 0 0 round var(--panel-radius));
-  transition: transform var(--panel-duration) var(--panel-ease), clip-path var(--panel-duration) var(--panel-ease);
+  /* Motion is coordinated across all panels in portfolio.ts. */
   will-change: transform, clip-path;
 }
 .panel[data-active="true"] {
@@ -864,11 +864,11 @@ button:focus-visible {
     letter-spacing: 0.12em;
   }
   .deck {
-    --panel-gap: 7px;
+    --panel-gap: 6px;
     --rail-size: 49px;
     --expanded-size: calc(100cqh - 3 * (var(--rail-size) + var(--panel-gap)));
     --panel-radius: 10px;
-    --panel-duration: 520ms;
+    --panel-duration: 620ms;
     flex-direction: column;
     gap: 7px;
     min-height: 415px;
