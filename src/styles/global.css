@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Only the footer labels use this font; see assets/fonts/README.md. */
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/caveat-footer.woff2") format("woff2");
+}
+
 :root {
   color-scheme: dark;
   font-family: "DM Sans Variable", sans-serif;

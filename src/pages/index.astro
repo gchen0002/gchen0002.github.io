@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import ProjectIcon from '../components/ProjectIcon.astro';
 import TechnologyStack from '../components/TechnologyStack.astro';
@@ -10,6 +10,11 @@ import kickpostMobile from '../assets/kickpost-mobile.png';
 import esportsDesktop from '../assets/esports-desktop.png';
 import esportsMobile from '../assets/esports-mobile.png';
 import ritoPreview from '../assets/rito-store.png';
+
+const [kickpostMobileImage, esportsMobileImage] = await Promise.all([
+  getImage({ src: kickpostMobile, width: 390, format: 'webp' }),
+  getImage({ src: esportsMobile, width: 390, format: 'webp' }),
+]);
 
 const projects = [
   { id: 'kickpost', title: 'KickPost', category: 'EXPERIENCE', caption: 'FULL-STACK DEVELOPMENT', stack: ['react', 'nodedotjs', 'postgresql', 'aws'], role: 'Full-Stack Developer Intern', date: 'Jul 2026 — Present', description: 'I help make KickPost faster and easier to use.', detail: 'Optimizing PostgreSQL queries, building real-time features, and improving deployments.', url: 'https://www.kickpost.io/', link: 'Visit KickPost' },
@@ -57,9 +62,9 @@ const projects = [
             </div>
 
             <div class={`preview preview-${project.id}`}>
-              {project.id === 'kickpost' && <a class="website-preview" href="https://www.kickpost.io/" target="_blank" rel="noopener noreferrer" aria-label="Preview KickPost’s website — opens in a new tab"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>kickpost.io</span><span aria-hidden="true">↗</span></div><div class="website-capture"><Image class="website-desktop" src={kickpostHomepage} width={960} format="webp" alt="KickPost homepage with its partner community and sales platform" loading="eager" /><Image class="website-mobile" src={kickpostMobile} width={390} format="webp" alt="KickPost mobile homepage" loading="lazy" /></div><span class="website-caption"><span>Explore KickPost</span><span aria-hidden="true">↗</span></span></a>}
-              {project.id === 'esports' && <a class="website-preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label="Open Esports Analytics — preview of the research platform"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Esports Analytics</span><span aria-hidden="true">↗</span></div><div class="website-capture"><Image class="website-desktop" src={esportsDesktop} width={1100} format="webp" alt="Esports Analytics showing the live match board, player research, and historical performance chart" loading="lazy" /><Image class="website-mobile" src={esportsMobile} width={390} format="webp" alt="Esports Analytics mobile player research screen" loading="lazy" /></div><span class="website-caption"><span>Explore the platform</span><span aria-hidden="true">↗</span></span></a>}
-              {project.id === 'rito' && <a class="website-preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label="View RitoEsports Tracker in the Chrome Web Store"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>RitoEsports Tracker</span><span aria-hidden="true">↗</span></div><div class="website-capture rito-capture"><Image src={ritoPreview} width={1100} format="webp" alt="RitoEsports Tracker’s published screenshot showing live matches, upcoming schedules, and stream links" loading="lazy" /></div><span class="website-caption"><span>View extension</span><span aria-hidden="true">↗</span></span></a>}
+              {project.id === 'kickpost' && <a class="website-preview" href="https://www.kickpost.io/" target="_blank" rel="noopener noreferrer" aria-label="Preview KickPost’s website — opens in a new tab"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>kickpost.io</span><span aria-hidden="true">↗</span></div><div class="website-capture"><picture><source media="(max-width: 760px)" srcset={kickpostMobileImage.src} width={kickpostMobileImage.attributes.width} height={kickpostMobileImage.attributes.height} /><Image src={kickpostHomepage} width={960} format="webp" alt="KickPost homepage with its partner community and sales platform" loading="eager" fetchpriority="high" /></picture></div><span class="website-caption"><span>Explore KickPost</span><span aria-hidden="true">↗</span></span></a>}
+              {project.id === 'esports' && <template data-deferred-preview><a class="website-preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label="Open Esports Analytics — preview of the research platform"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Esports Analytics</span><span aria-hidden="true">↗</span></div><div class="website-capture"><picture><source media="(max-width: 760px)" srcset={esportsMobileImage.src} width={esportsMobileImage.attributes.width} height={esportsMobileImage.attributes.height} /><Image src={esportsDesktop} width={1100} format="webp" alt="Esports Analytics showing the live match board, player research, and historical performance chart" loading="eager" /></picture></div><span class="website-caption"><span>Explore the platform</span><span aria-hidden="true">↗</span></span></a></template>}
+              {project.id === 'rito' && <template data-deferred-preview><a class="website-preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label="View RitoEsports Tracker in the Chrome Web Store"><div class="website-toolbar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>RitoEsports Tracker</span><span aria-hidden="true">↗</span></div><div class="website-capture rito-capture"><Image src={ritoPreview} width={1100} format="webp" alt="RitoEsports Tracker’s published screenshot showing live matches, upcoming schedules, and stream links" loading="eager" /></div><span class="website-caption"><span>View extension</span><span aria-hidden="true">↗</span></span></a></template>}
               {project.id === 'logs' && <LogPipeline />}
             </div>
             <TechnologyStack technologies={project.stack} />

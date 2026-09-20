@@ -50,6 +50,9 @@ function openPanel(index: number) {
   if (motionFrame !== undefined) cancelAnimationFrame(motionFrame);
   motionFrame = undefined;
   active = index;
+  // Keep unopened screenshots out of the cold-load download queue.
+  const deferredPreview = panels[index]?.querySelector<HTMLTemplateElement>("[data-deferred-preview]");
+  if (deferredPreview) deferredPreview.replaceWith(deferredPreview.content.cloneNode(true));
   // Clear the previous details before moving the clip or changing selection.
   setContentReady(null);
   panels.forEach((panel, position) => {
@@ -196,15 +199,16 @@ function updateClock() {
   if (periodHost) periodHost.textContent = value.period;
   if (readableHost) readableHost.textContent = `${value.readable}, Los Angeles`;
 }
-let timer: ReturnType<typeof setInterval> | undefined;
+let timer: ReturnType<typeof setTimeout> | undefined;
 function syncClock() {
-  clearInterval(timer);
+  clearTimeout(timer);
   if (document.hidden) return;
   updateClock();
-  timer = setInterval(updateClock, 1000);
+  // The clock has minute precision; wake only at the next minute boundary.
+  timer = setTimeout(syncClock, 60_000 - (Date.now() % 60_000));
 }
 document.addEventListener("visibilitychange", syncClock);
-window.addEventListener("pagehide", () => clearInterval(timer));
+window.addEventListener("pagehide", () => clearTimeout(timer));
 window.addEventListener("pageshow", syncClock);
 syncClock();
 document.fonts.ready
