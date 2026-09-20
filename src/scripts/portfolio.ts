@@ -10,18 +10,21 @@ const contents = [...document.querySelectorAll<HTMLElement>(".panel-content")];
 const hoverPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 let active = -1;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const panelAnimations = new Set<Animation>();
+let motionFrame: number | undefined;
+let expansion = panels.map(() => 0);
 
-function cancelPanelMotion() {
-  panelAnimations.forEach((animation) => animation.cancel());
-  panelAnimations.clear();
+function clearMotionStyles() {
+  panels.forEach((panel) => {
+    panel.style.removeProperty("transform");
+    panel.style.removeProperty("clip-path");
+  });
 }
 
-function panelFrames() {
-  return panels.map((panel) => {
-    const style = getComputedStyle(panel);
-    return { transform: style.transform, clipPath: style.clipPath };
-  });
+function cancelPanelMotion() {
+  if (motionFrame !== undefined) cancelAnimationFrame(motionFrame);
+  motionFrame = undefined;
+  expansion = panels.map((_, index) => index === active ? 1 : 0);
+  clearMotionStyles();
 }
 
 reducedMotion.addEventListener("change", cancelPanelMotion);
@@ -30,10 +33,9 @@ if (deck) new ResizeObserver(cancelPanelMotion).observe(deck);
 function openPanel(index: number) {
   if (index < 0 || index >= panels.length || index === active) return;
   const animate = active !== -1 && !reducedMotion.matches && deck !== null;
-  // Capture every moving edge before cancelling. Retarget the entire strip from
-  // one shared timestamp, so interrupted transitions cannot separate the cards.
-  const before = animate ? panelFrames() : [];
-  cancelPanelMotion();
+  const before = [...expansion];
+  if (motionFrame !== undefined) cancelAnimationFrame(motionFrame);
+  motionFrame = undefined;
   active = index;
   panels.forEach((panel, position) => {
     const expanded = position === index;
@@ -46,21 +48,58 @@ function openPanel(index: number) {
       content.setAttribute("aria-hidden", String(!expanded));
     }
   });
-  if (!animate || !deck) return;
-  const after = panelFrames();
+  const target = panels.map((_, position) => position === index ? 1 : 0);
+  const firstPanel = panels[0];
+  if (!animate || !deck || !firstPanel) {
+    expansion = target;
+    clearMotionStyles();
+    return;
+  }
+
+  // Read geometry only when a selection changes, never inside the animation loop.
+  const vertical = window.matchMedia("(max-width: 760px)").matches;
   const deckStyle = getComputedStyle(deck);
-  const duration = Number.parseFloat(deckStyle.getPropertyValue("--panel-duration"));
-  const easing = deckStyle.getPropertyValue("--panel-ease").trim();
-  const startTime = document.timeline.currentTime;
-  panels.forEach((panel, position) => {
-    const from = before[position];
-    const to = after[position];
-    if (!from || !to) return;
-    const animation = panel.animate([from, to], { duration, easing });
-    if (typeof startTime === "number") animation.startTime = startTime;
-    panelAnimations.add(animation);
-    animation.onfinish = () => panelAnimations.delete(animation);
-  });
+  const gap = Number.parseFloat(deckStyle.getPropertyValue("--panel-gap"));
+  const radius = deckStyle.getPropertyValue("--panel-radius").trim();
+  // Unitless milliseconds cannot be rewritten to seconds by the CSS minifier.
+  const durationMs = Number(deckStyle.getPropertyValue("--panel-duration-ms"));
+  const bounds = deck.getBoundingClientRect();
+  const panelBounds = firstPanel.getBoundingClientRect();
+  const expandedSize = vertical ? panelBounds.height : panelBounds.width;
+  const extent = vertical ? bounds.height : bounds.width;
+  const railSize = (extent - expandedSize - gap * (panels.length - 1)) / (panels.length - 1);
+  const extra = expandedSize - railSize;
+  const started = performance.now();
+
+  function drawFrame(now: number) {
+    const progress = Math.min(1, Math.max(0, (now - started) / durationMs));
+    const eased = 1 - (1 - progress) ** 4;
+    expansion = target.map((value, position) => {
+      const from = before[position] ?? 0;
+      return from + (value - from) * eased;
+    });
+    // Derive every edge from the same widths. Interrupted motion therefore keeps
+    // the seam constant instead of letting independent transitions drift apart.
+    let edge = 0;
+    panels.forEach((panel, position) => {
+      const visibleSize = railSize + (expansion[position] ?? 0) * extra;
+      const hiddenSize = Math.max(0, expandedSize - visibleSize);
+      panel.style.transform = vertical ? `translate3d(0, ${edge}px, 0)` : `translate3d(${edge}px, 0, 0)`;
+      panel.style.clipPath = vertical
+        ? `inset(0 0 ${hiddenSize}px 0 round ${radius})`
+        : `inset(0 ${hiddenSize}px 0 0 round ${radius})`;
+      edge += visibleSize + gap;
+    });
+    if (progress < 1) {
+      motionFrame = requestAnimationFrame(drawFrame);
+    } else {
+      motionFrame = undefined;
+      expansion = target;
+      clearMotionStyles();
+    }
+  }
+  drawFrame(started);
+
 }
 
 panels.forEach((panel, index) => {

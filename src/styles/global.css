@@ -224,7 +224,7 @@ button:focus-visible {
   --rail-size: calc((100cqw - 3 * var(--panel-gap)) / (var(--panel-grow) + 3));
   --expanded-size: calc(var(--rail-size) * var(--panel-grow));
   --panel-radius: 16px;
-  --panel-duration: 720ms;
+  --panel-duration-ms: 720;
   --panel-ease: cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   gap: 8px;
@@ -868,7 +868,7 @@ button:focus-visible {
     --rail-size: 49px;
     --expanded-size: calc(100cqh - 3 * (var(--rail-size) + var(--panel-gap)));
     --panel-radius: 10px;
-    --panel-duration: 620ms;
+    --panel-duration-ms: 620;
     flex-direction: column;
     gap: 7px;
     min-height: 415px;
