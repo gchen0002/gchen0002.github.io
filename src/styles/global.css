@@ -359,7 +359,7 @@ button:focus-visible {
 }
 .panel[data-content-ready="true"] .panel-category {
   opacity: 1;
-  transition: opacity 240ms ease-out;
+  transition: opacity 180ms ease-out;
 }
 .panel[data-active="true"] .rail-title,
 .panel[data-active="true"] .rail-bottom {
@@ -382,7 +382,7 @@ button:focus-visible {
 .panel[data-content-ready="true"] .panel-content {
   opacity: 1;
   visibility: visible;
-  transition: opacity 240ms ease-out;
+  transition: opacity 180ms ease-out;
 }
 .panel-copy {
   min-width: 0;

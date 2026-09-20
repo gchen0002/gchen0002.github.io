@@ -50,7 +50,7 @@ function openPanel(index: number) {
   if (motionFrame !== undefined) cancelAnimationFrame(motionFrame);
   motionFrame = undefined;
   active = index;
-  // Hide details before the clip moves; reveal only after the panel settles.
+  // Clear the previous details before moving the clip or changing selection.
   setContentReady(null);
   panels.forEach((panel, position) => {
     const expanded = position === index;
@@ -81,6 +81,7 @@ function openPanel(index: number) {
   const railSize = (extent - expandedSize - gap * (panels.length - 1)) / (panels.length - 1);
   const extra = expandedSize - railSize;
   const started = performance.now();
+  let contentRevealed = false;
 
   function drawFrame(now: number) {
     const progress = Math.min(1, Math.max(0, (now - started) / durationMs));
@@ -101,6 +102,12 @@ function openPanel(index: number) {
         : `inset(0 ${hiddenSize}px 0 0 round ${radius})`;
       edge += visibleSize + gap;
     });
+    // Fade during the slide once there is room, using the actual expansion so
+    // interrupted transitions stay in sync. The panel clip contains all details.
+    if (!contentRevealed && (expansion[index] ?? 0) >= 0.8) {
+      setContentReady(index);
+      contentRevealed = true;
+    }
     if (progress < 1) {
       motionFrame = requestAnimationFrame(drawFrame);
     } else {
