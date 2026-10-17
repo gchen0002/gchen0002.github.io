@@ -1,6 +1,6 @@
 import "./resume-dialog";
 import "./easter-eggs";
-import { createRollingNumber } from "@kitlangton/rolling-number";
+import { createRollingText } from "@kitlangton/rolling-number";
 import "@kitlangton/rolling-number/styles.css";
 
 const deck = document.querySelector<HTMLElement>(".deck");
@@ -193,11 +193,18 @@ const periodHost = document.getElementById("clock-period");
 const readableHost = document.getElementById("clock-readable");
 const digits = clockDigits(clockParts()).map((value, index) => {
   const host = document.getElementById(`clock-digit-${index}`);
-  return host ? createRollingNumber(host, { value, duration: 280, stagger: "none" }) : undefined;
+  return host ? createRollingText(host, {
+    text: String(value),
+    transition: "direct",
+    direction: "up",
+    duration: 420,
+    motionBlur: true,
+    stagger: "none",
+  }) : undefined;
 });
 function updateClock() {
   const value = clockParts();
-  clockDigits(value).forEach((digit, index) => digits[index]?.update({ value: digit }));
+  clockDigits(value).forEach((digit, index) => digits[index]?.update({ text: String(digit) }));
   if (periodHost) periodHost.textContent = value.period;
   if (readableHost) readableHost.textContent = `${value.readable}, Los Angeles`;
 }

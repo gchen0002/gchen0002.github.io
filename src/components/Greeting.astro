@@ -1,0 +1,6 @@
+---
+const name = 'guanying';
+---
+<h1 id="greeting" aria-label={`hello, i’m ${name}`}>
+  <span class="greeting-reveal" aria-hidden="true">hello, i’m <span class="greeting-name">{Array.from(name).map((letter, index) => <span class="greeting-wave-letter" style={`--letter: ${index}`}>{letter}</span>)}</span></span>
+</h1>

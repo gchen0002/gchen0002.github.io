@@ -149,51 +149,29 @@ button:focus-visible {
   padding-top: 4px;
 }
 .intro h1 {
-  font-family: var(--hand);
-  font-size: clamp(42px, 4.9vw, 69px);
+  font-size: clamp(40px, 4.2vw, 60px);
   font-weight: 400;
   line-height: 1.12;
-  letter-spacing: 0.005em;
+  letter-spacing: -0.05em;
 }
-.greeting-writing {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.12em;
-  vertical-align: middle;
+.greeting-name {
+  font-weight: 650;
 }
-.pen-word { height: 1.2em; overflow: visible; flex: none; }
-.pen-hello { width: 2.0073em; }
-.pen-name { width: 5.0182em; }
-.pen-stroke {
-  stroke: currentColor;
-  stroke-width: 4.3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.greeting-reveal {
+  display: inline-block;
+  white-space: nowrap;
+}
+.greeting-wave-letter {
+  display: inline-block;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .pen-stroke {
-    stroke-dasharray: 1;
-    animation: pen-write var(--stroke-duration) linear var(--stroke-delay) both;
+  .greeting-wave-letter {
+    animation: greeting-wave 455ms cubic-bezier(.22, .8, .25, 1) calc(80ms + var(--letter) * 29.25ms) both;
   }
-  .greeting-writing .wave { animation: greeting-wave 750ms ease-in-out 850ms both; }
-}
-@keyframes pen-write {
-  0% { stroke-dashoffset: 1; opacity: 0; }
-  1% { opacity: 1; }
-  100% { stroke-dashoffset: 0; opacity: 1; }
 }
 @keyframes greeting-wave {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(12deg); }
-  55% { transform: rotate(-8deg); }
-  80% { transform: rotate(6deg); }
-}
-.wave {
-  display: inline-block;
-  font-size: 0.7em;
-  vertical-align: 0.03em;
-  margin: 0 0.1em;
-  transform-origin: 75% 75%;
+  from { transform: translateY(4px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 .intro p {
   margin-top: 12px;
@@ -813,7 +791,7 @@ button:focus-visible {
     padding-top: 9px;
   }
   .intro h1 {
-    font-size: clamp(33px, 7.7vw, 48px);
+    font-size: clamp(27px, 7.4vw, 48px);
     white-space: nowrap;
   }
   .intro p {
